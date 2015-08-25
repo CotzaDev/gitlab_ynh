@@ -1,0 +1,35 @@
+{
+    "name": "Gitlab",
+    "id": "gitlab",
+    "description": {
+        "en": "Git repository management",
+        "fr": "Gestion des dépôts git"
+    },
+    "developer": {
+        "name": "Andrea Cotza",
+        "email": "andrea@cotza.me"
+    },
+    "multi_instance": "false",
+    "arguments": {
+        "install": [
+            {
+                "name": "domain",
+                "type": "domain",
+                "ask": {
+                    "en": "Choose a domain or subdomain for gitlab (install on root '/')",
+                    "fr": "Choisissez un domaine ou sous-domaine pour gitlab (installation à la racine '/')"
+                },
+                "example": "git.domain.org"
+            },
+            {
+                "name": "is_public",
+                "ask": {
+                    "en": "Is it a public Gitlab site ?",
+                    "fr": "Est-ce un site public ?"
+                },
+                "choices": ["Yes", "No"],
+                "default": "Yes"
+            }
+        ]
+    }
+}

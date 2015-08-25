@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo gitlab-ctl uninstall
+sudo apt-get remove -y gitlab-ce
+
+sudo yunohost app ssowatconf
+sudo service nginx reload

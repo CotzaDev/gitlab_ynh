@@ -1,0 +1,57 @@
+#!/bin/bash
+set -e # Exit on error
+
+# Retrieve arguments
+domain=$1
+is_public=$2
+path=""
+
+sudo yunohost app checkurl $domain$path -a gitlab
+if [[ ! $? -eq 0 ]]; then
+    exit 1
+fi
+
+findPort () {
+    port=$1
+
+    sudo yunohost app checkport $port
+    while [[ ! $? -eq 0 ]]
+        do
+            port=$(($port + 1))
+            sudo yunohost app checkport $port
+        done
+
+   return $port
+}
+
+# Save specific settings
+sudo yunohost app setting gitlab is_public -v $is_public
+# Install dependencies
+sudo apt-get install -y curl openssh-server
+
+# Add gitlab package and install it
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+sudo apt-get install -y gitlab-ce
+
+# Find available port
+findPort 8001
+
+# Configure gitlab
+sed -i "s@GENERATED_EXTERNAL_URL@https://$domain@g" ../conf/gitlab.rb
+sed -i "s@PORT@$port@g" ../conf/gitlab.rb
+sudo cp -f ../conf/gitlab.rb /etc/gitlab/gitlab.rb
+sudo gitlab-ctl reconfigure
+
+# Configure nginx
+sed -i "s@PORT@$port@g" ../conf/nginx.conf
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/gitlab.conf
+
+# Set public
+if [ "$is_public" = "Yes" ];
+then
+	sudo yunohost app setting gitlab skipped_uris -v "/"
+fi
+
+# Reload Nginx, restart seafile and regenerate SSOwat conf
+sudo yunohost app ssowatconf
+sudo service nginx reload
