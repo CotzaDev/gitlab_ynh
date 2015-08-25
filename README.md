@@ -19,3 +19,8 @@ With the install option from admin panel
 - Copy and paste: https://github.com/CotzaDev/gitlab_ynh
 
 or from command line `sudo yunohost app install https://github.com/CotzaDev/gitlab_ynh`
+
+Default admin account
+---------------------
+Username: root 
+Password: 5iveL!fe

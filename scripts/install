@@ -54,3 +54,4 @@ fi
 # Reload Nginx, restart seafile and regenerate SSOwat conf
 sudo yunohost app ssowatconf
 sudo service nginx reload
+sudo gitlab-ctl restart
