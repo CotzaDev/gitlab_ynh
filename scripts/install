@@ -49,6 +49,7 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/gitlab.conf
 if [ "$is_public" = "Yes" ];
 then
 	sudo yunohost app setting gitlab skipped_uris -v "/"
+  sudo yunohost app setting gitlab protected_uris -v "/ynhpanel.js,/ynhpanel.json,/ynhpanel.css,/yunohost/sso"
 fi
 
 # Reload Nginx, restart seafile and regenerate SSOwat conf
