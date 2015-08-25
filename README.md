@@ -22,5 +22,6 @@ or from command line `sudo yunohost app install https://github.com/CotzaDev/gitl
 
 Default admin account
 ---------------------
-Username: root 
+Username: root
+
 Password: 5iveL!fe
